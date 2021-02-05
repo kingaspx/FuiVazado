@@ -1,14 +1,14 @@
 import {BrowserRouter} from "react-router-dom";
 import GlobalStyles, {Layout} from './style'
 import HeaderComponent from "./components/Header";
-import HomePage from "./pages/Home";
+import Routes from "./routes";
 
 function App() {
     return (
         <BrowserRouter>
             <Layout>
                 <HeaderComponent/>
-                <HomePage/>
+                <Routes/>
             </Layout>
 
             <GlobalStyles/>

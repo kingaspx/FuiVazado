@@ -9,12 +9,12 @@ export const Container = styled.div`
   width: 100%;
   padding: 5em 5em;
 
+  display: flex;
+  justify-content: center;
+
   @media (max-width: 768px) {
     padding: 2em 2em;
   }
-
-  display: flex;
-  justify-content: center;
 
   h1 {
     font-size: 40px;

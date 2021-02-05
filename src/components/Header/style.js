@@ -10,7 +10,7 @@ export const Layout = styled.div`
   justify-content: center;
 
   border-bottom: 1px solid rgba(255, 255, 255, .3);
-  
+
   position: sticky;
   top: 0;
   z-index: 999;
@@ -32,9 +32,9 @@ export const Container = styled.div`
     font-weight: 600;
     font-size: 20px;
   }
-  
-  #right-buttons{
-    @media(max-width: 768px){
+
+  #right-buttons {
+    @media (max-width: 768px) {
       display: none;
     }
   }
@@ -68,6 +68,14 @@ export const Container = styled.div`
         background: #fff;
         color: #1A1237;
       }
+    }
+  }
+
+  #menu-mobile {
+    display: block;
+    
+    @media (min-width: 768px) {
+      display: none;
     }
   }
 `

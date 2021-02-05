@@ -35,6 +35,7 @@ export const Formulario = styled.form`
     border-radius: 5px;
     cursor: pointer;
     transition-duration: 200ms;
+    outline: 0;
     
     :hover{
       transition-duration: 200ms;
@@ -45,6 +46,7 @@ export const Formulario = styled.form`
   span {
     font-size: 12px;
     margin-top: 10px;
+    text-align: center;
     
     a{
       color: #000;

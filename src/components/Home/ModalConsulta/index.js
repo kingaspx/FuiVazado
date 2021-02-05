@@ -5,6 +5,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import {Formulario} from "./style";
 import {CircularProgress} from "@material-ui/core";
+import api from 'axios'
+import history from "../../../history";
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -36,6 +38,7 @@ const ModalConsultar = ({open, handleClose}) => {
     const [cpf, setCpf] = useState('');
     const [dataNascimento, setDataNascimento] = useState('');
     const [openBackDrop, setOpenBackDrop] = useState(false);
+    const [resultado, setResultado] = useState('');
 
     function mCPF(cpf) {
         cpf = cpf.replace(/\D/g, "")
@@ -55,18 +58,39 @@ const ModalConsultar = ({open, handleClose}) => {
         setDataNascimento(data_nascimento)
     }
 
-    const handleSubmitForm = (e) => {
+    async function handleSubmitForm(e) {
         e.preventDefault()
 
-        if (cpf === '' || dataNascimento === '') {
+        if (cpf === '') {
             console.log('dados vazios')
         } else {
-            handleToggleBackDrop()
+            let cpfFormatted = cpf.replaceAll('.', '').replace('-', '')
 
-            setTimeout(function () {
+            handleToggleBackDrop()
+            try {
+                const response = await api.get(`https://api.radialle.com/api/LeakQuery?cpf=${cpfFormatted}`)
+                if (response.results !== undefined) {
+                    setResultado('exists')
+                } else {
+                    setResultado('not-exists')
+                }
+
+                history.push({
+                    pathname: "/resultado",
+                    state: {response: resultado},
+                });
+
                 handleCloseBackDrop()
-                console.log(cpf, dataNascimento)
-            }, 3000)
+            } catch (e) {
+                setResultado('error')
+
+                history.push({
+                    pathname: "/resultado",
+                    state: {response: 'error'},
+                });
+
+                handleCloseBackDrop()
+            }
         }
     }
 
@@ -108,8 +132,8 @@ const ModalConsultar = ({open, handleClose}) => {
                             <input placeholder={'CPF'} value={cpf}
                                    onChange={(e) => mCPF(e.target.value.substring(0, 14))}/>
 
-                            <input placeholder={'Data de Nascimento'} value={dataNascimento}
-                                   onChange={(e) => mDataNascimento(e.target.value.substring(0, 10))}/>
+                            {/*<input placeholder={'Data de Nascimento'} value={dataNascimento}*/}
+                            {/*       onChange={(e) => mDataNascimento(e.target.value.substring(0, 10))}/>*/}
 
                             <button type={"submit"}>
                                 Verificar
